@@ -1,0 +1,12 @@
+import asyncio
+from functools import wraps
+
+def awaitme(fn):
+    if asyncio.iscoroutinefunction(fn):
+        return fn
+
+    @wraps(fn)
+    async def wrapper(*args, **kwargs):
+        return fn(*args, **kwargs)
+
+    return wrapper
