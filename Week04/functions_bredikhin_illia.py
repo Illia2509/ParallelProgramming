@@ -3,28 +3,28 @@ custom_power = lambda x=0, /, e=1: pow(x, e)
 
 def custom_equation(x: int = 0, y: int = 0, /, a: int = 1, b: int = 1, *, c: int = 1) -> float:
     """
-    Calculates the equation (x**a + y**b) / c.
+    :param x:
+    :param y:
+    :param a:
+    :param b:
+    :param c:
+    :return:
     """
+    for name, value in (("x", x), ("y", y), ("a", a), ("b", b), ("c", c)):
+        if type(value) is not int:
+            raise TypeError(f"{name} must be int")
 
-    args = (x, y, a, b, c)
+    result = pow(x, a) + pow(y, b)
 
-    for value in args:
-        if not isinstance(value, int):
-            raise TypeError("All arguments must be integers.")
-
-    result = (pow(x, a) + pow(y, b)) / c
-
-    return float(result)
+    return float(result / c)
 
 
-_call_count = 0
+_count = 0
 
 
 def fn_w_counter() -> (int, dict[str, int]):
-    global _call_count
+    global _count
 
-    _call_count = _call_count + 1
+    _count = _count + 1
 
-    counter_info = {__name__: _call_count}
-
-    return _call_count, counter_info
+    return _count, dict({__name__: _count})
